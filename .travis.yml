@@ -5,4 +5,4 @@ node_js:
   - "iojs"
   - "iojs-v1.0.4" 
 script:
-	-"node ./server.js"
+- "node ./server.js"
