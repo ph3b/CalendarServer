@@ -9,6 +9,4 @@ require('./routes/socketRoutes.js')(io);
 
 var port = 3000;
 
-http.listen(port, function(){
-    console.log("Server listening on port: " + port);
-});
+http.listen(port, '0.0.0.0');
