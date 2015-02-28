@@ -4,7 +4,7 @@
 var io = require('socket.io-client');
 var expect = require('expect.js');
 
-var apiUrl = 'http://localhost:3000';
+var apiUrl = 'http://0.0.0.0:3000';
 
 var options ={
     transports: ['websocket'],
