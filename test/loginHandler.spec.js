@@ -1,6 +1,8 @@
 /**
  * Created by mattiden on 28.02.15.
  */
+
+require('../server.js');
 var io = require('socket.io-client');
 var expect = require('expect.js');
 

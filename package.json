@@ -1,6 +1,6 @@
 {
   "name": "CalendarServer",
-  "main": "server.js",
+  "main": "startServer.js",
   "dependencies": {
     "bcrypt": "^0.8.1",
     "expect.js": "^0.3.1",
