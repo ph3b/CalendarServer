@@ -3,7 +3,7 @@
  */
 var jwt = require('jsonwebtoken');
 var _ = require('lodash');
-var config = require('../../config/config.js');
+var settings = require('../../config/settings.js');
 
 var users = [
     {"username": "mathias", "password": "tennis"},
@@ -11,18 +11,17 @@ var users = [
 ];
 
 module.exports = function(client){
-    client.on('user:login', function(req, callback){
+    client.on('user:login', function(req, res){
         var message;
         for(var i = 0; i < users.length; i++){
-            console.log(users[i])
             if(users[i].username == req.username && users[i].password == req.password){
-                var token = jwt.sign({"username": req.username}, config.secret);
+                var token = jwt.sign({"username": req.username}, settings.secret);
                 message = { "token": token, "status": 200, "message": "ok"};
-                callback(message);
+                res(message);
                 return;
             }
         }
         message = {"status": 401, "message": "Invalid credentials"};
-        callback(message);
-    })
+        res(message);
+    });
 };

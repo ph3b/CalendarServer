@@ -2,13 +2,13 @@
  * Created by mattiden on 28.02.15.
  */
 
-require('../server.js');
+require('../server.js')('test');
 var io = require('socket.io-client');
 var expect = require('expect.js');
 
-var apiUrl = 'http://0.0.0.0:3000';
+var apiUrl = 'http://localhost:3000';
 
-var options ={
+var options = {
     transports: ['websocket'],
     'force new connection': true
 };
@@ -28,6 +28,7 @@ describe('User logs in', function(){
             })
         })
     });
+
     it('should give error when user sends invalid credentials',function(done){
         var credentials = {"username": "mathias", "password": "feilpassord"};
         var client = io.connect(apiUrl, options);

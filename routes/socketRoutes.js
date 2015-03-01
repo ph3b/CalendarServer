@@ -6,5 +6,20 @@ var loginHandler = require('./handler/loginHandler.js');
 module.exports = function(io){
     io.on('connection', function(client){
         loginHandler(client);
-    })
+
+        client.on('login', function(req, res){
+            console.log(req);
+
+            //res({"message": "hello"});
+        });
+        client.on('disconnect', function(){
+            console.log('Client disconnected');
+        });
+
+        client.on('message', function(msg){
+            var message = {"message": "Heafudsgf"};
+            console.log('bæsj');
+            io.emit(message);
+        })
+    });
 };
