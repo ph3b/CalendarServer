@@ -7,6 +7,7 @@ Stack: Node.JS, Socket.IO, MySQL.
 $ npm install
 $ node startServer.js
 
+
 # To test:
 $ npm test
 
