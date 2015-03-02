@@ -15,11 +15,12 @@ var options = {
 
 describe('User logs in', function(){
     it('should give user token when sending valid credentials',function(done){
-        var credentials = {"username": "mathias", "password": "tennis"};
+        var credentials = {"username": "mathias", "password": "hawaii"};
 
         send.post(apiUrl + '/login')
             .send(credentials)
             .end(function(err, res){
+                expect(res.body.token).to.be.a('string');
                 expect(res.body.token.split(".").length).to.be(3);
                 expect(res.body.message).to.be('ok');
                 expect(res.body.status).to.be(200);
@@ -41,7 +42,7 @@ describe('User logs in', function(){
     });
 
     it('should connect user to socket after authenticating',function(done){
-        var credentials = {"username": "mathias", "password": "tennis"};
+        var credentials = {"username": "mathias", "password": "hawaii"};
 
         send.post(apiUrl + '/login')
             .send(credentials)
