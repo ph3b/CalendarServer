@@ -9,4 +9,9 @@ module.exports = function(io){
         secret: settings.secret,
         handshake: true
     }));
+    io.on('connection', function(){
+        io.on('appointment:new', function(appointment){
+
+        })
+    })
 };
