@@ -17,7 +17,7 @@ catch(e){
 var connection = mysql.createConnection({
     host: 'xlib2.mysql.domeneshop.no',
     user: 'xlib2',
-    password: 'LxY2FMui2xwcZYF',
+    password: password,
     database : 'xlib2'
 });
 
