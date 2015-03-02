@@ -5,6 +5,7 @@
     "bcrypt": "^0.8.1",
     "expect.js": "^0.3.1",
     "express": "^4.12.0",
+    "istanbul": "^0.3.6",
     "jsonwebtoken": "^3.2.2",
     "lodash": "^3.3.1",
     "mocha": "^2.1.0",
@@ -14,6 +15,6 @@
   },
   "scripts": {
     "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "local-test" : "./node_modules/mocha/bin/mocha"
+    "local-test": "./node_modules/mocha/bin/mocha"
   }
 }
