@@ -5,8 +5,12 @@ module.exports = function(mode){
     var app = require('express')();
     var http = require('http').Server(app);
     var io = require('socket.io')(http);
-    var settings = require('./config/settings');
+    var bodyParser = require('body-parser');
+
+    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(bodyParser.json());
     require('./routes/socketRoutes.js')(io);
+    require('./routes/restRoutes.js')(app);
 
     require('dns').lookup(require('os').hostname(), function (err, add, fam) {
         var port = 3000;

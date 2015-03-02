@@ -1,25 +1,12 @@
 /**
  * Created by mattiden on 28.02.15.
  */
-var loginHandler = require('./handler/loginHandler.js');
+var socketioJwt = require('socketio-jwt');
+var settings = require('./../config/settings.js');
 
 module.exports = function(io){
-    io.on('connection', function(client){
-        loginHandler(client);
-
-        client.on('login', function(req, res){
-            console.log(req);
-
-            //res({"message": "hello"});
-        });
-        client.on('disconnect', function(){
-            console.log('Client disconnected');
-        });
-
-        client.on('message', function(msg){
-            var message = {"message": "Heafudsgf"};
-            console.log('bæsj');
-            io.emit(message);
-        })
-    });
+    io.set('authorization', socketioJwt.authorize({
+        secret: settings.secret,
+        handshake: true
+    }));
 };
