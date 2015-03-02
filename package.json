@@ -13,6 +13,7 @@
     "socket.io-client": "^1.3.4"
   },
   "scripts": {
-  	"test": "./node_modules/mocha/bin/mocha"
-	}
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "local-test" : "./node_modules/mocha/bin/mocha"
+  }
 }
