@@ -1,18 +1,7 @@
-/**
- * Created by mattiden on 02.03.15.
- */
-/**
- * Created by mattiden on 02.03.15.
- */
-var jwt = require('jsonwebtoken');
+jwt = require('jsonwebtoken');
 var _ = require('lodash');
 var settings = require('../../config/settings.js');
 var db = require('./../../config/db.js');
-
-var users = [
-    {"username": "mathias", "password": "tennis"},
-    {"username": "erlend", "password": "fotball"}
-];
 
 module.exports = function(socket){
     socket.on('appointment:new', function(req, res){

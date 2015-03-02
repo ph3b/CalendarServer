@@ -6,7 +6,8 @@ module.exports = function(mode){
     var http = require('http').Server(app);
     var io = require('socket.io')(http);
     var bodyParser = require('body-parser');
-
+    var cors = require('cors');
+    app.use(cors());
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(bodyParser.json());
     require('./routes/socketRoutes.js')(io);

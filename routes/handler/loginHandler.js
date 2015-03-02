@@ -16,7 +16,7 @@ module.exports = function(req, res){
     var user = {"username": req.body.username, "password": req.body.password};
     db.query("select * from cal_user where username = ?", user.username, function(err, response){
         if(err){
-            res.send(err)
+            res.send(err);
             return;
         }
         if(response.length && response[0].password === user.password){
@@ -28,6 +28,7 @@ module.exports = function(req, res){
         }
         message = {"status": 401, "message": "Invalid credentials"};
         res.send(message);
+        res.end();
     });
 
 };
