@@ -26,6 +26,11 @@ module.exports = function(socket){
         db.query("insert into cal_appointment set ?", appointment, function(err, results, fields){
             if(!err && typeof res == 'function'){
                 res({"message" : 'added', "status" : 200});
+                return;
+            }
+            if(err){
+                res.status(500);
+                res.send(err);
             }
         })
     })

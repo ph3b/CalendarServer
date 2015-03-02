@@ -11,10 +11,9 @@ var io = require('socket.io-client');
 
 var apiUrl = 'http://localhost:3000';
 
-describe('User adds appointment', function(){
-
-
-    it('should connect user to socket after authenticating',function(done){
+describe('New Appointment', function(){
+    it('Should add new appointment to database',function(done){
+        this.timeout(10000);
         var credentials = {"username": "mathias", "password": "hawaii"};
 
         send.post(apiUrl + '/login')
@@ -40,7 +39,6 @@ describe('User adds appointment', function(){
                         expect(res.status).to.be(200);
                         done();
                     });
-
                 })
             })
     });
