@@ -23,6 +23,6 @@ module.exports = function(mode){
         }
         http.listen(port, ip);
         console.log('Server running on: ' + ip + ':' + port);
-        console.log(process);
+        console.log(process.env);
     });
 };
