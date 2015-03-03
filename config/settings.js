@@ -9,9 +9,5 @@ module.exports = {
         'db' : 'xlib2',
         "dbUser": 'xlib2',
         'password' : 'LxY2FMui2xwcZYF'
-    },
-    "dev": {
-        "port": 3000,
-        "ip" : "10.0.0.98"
     }
 };

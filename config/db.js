@@ -12,8 +12,7 @@ try{
 catch(e){
     password = process.env.dbPw;
     console.log('bruker env')
-
-};
+}
 var connection = mysql.createConnection({
     host: 'xlib2.mysql.domeneshop.no',
     user: 'xlib2',
@@ -28,5 +27,4 @@ connection.connect(function(err){
         console.log(err);
     }
 });
-
 module.exports = connection;

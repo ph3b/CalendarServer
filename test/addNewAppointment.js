@@ -34,7 +34,6 @@ describe('New Appointment', function(){
                         "end_date": Date.now()
                     };
                     client.emit('appointment:new', appointment, function(res){
-                        console.log(res);
                         expect(res.message).to.be('added');
                         expect(res.status).to.be(200);
                         done();
@@ -65,7 +64,6 @@ describe('New Appointment', function(){
                         "end_date": Date.now()
                     };
                     client.emit('appointment:new', appointment, function(res){
-                        console.log(res);
                         expect(res.message).to.be('added');
                         expect(res.status).to.be(200);
                         done();
