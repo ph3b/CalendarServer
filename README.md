@@ -4,11 +4,11 @@
 Backend server for Fellesprosjekt. 
 Written in Node.JS using Socket.IO and MySQL.
 
-# To run:
+# To run
     $ npm install
     $ node startServer.js
 
 
-# To test:
+# To test
     $ npm test
 
