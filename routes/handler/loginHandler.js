@@ -20,7 +20,7 @@ module.exports = function(req, res){
             return;
         }
         if(response.length && response[0].password === user.password){
-            var token = jwt.sign({"username": user.username, "user_id" : response[0].user_id}, settings.secret);
+            var token = jwt.sign({"username": response[0].username, "user_id" : response[0].user_id}, settings.secret);
             message = { "token": token, "status": 200, "message": "ok"};
             res.send(message);
             res.end();

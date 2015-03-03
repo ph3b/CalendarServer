@@ -57,7 +57,9 @@ describe('User logs in', function(){
                 var client = io.connect(apiUrl, options);
 
                 client.on('connect' , function(){
+                    client.disconnect();
                     done();
+
                 })
             })
     });
@@ -70,7 +72,9 @@ describe('User logs in', function(){
         var client = io.connect(apiUrl, options);
         client.on('error' , function(response){
             expect(response).to.eql('Not authorized');
+            client.disconnect();
             done();
+
         });
     });
 

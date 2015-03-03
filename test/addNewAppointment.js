@@ -26,16 +26,17 @@ describe('New Appointment', function(){
                     'query': 'token=' + token
                 };
                 var client = io.connect(apiUrl, options);
-
+                var appointment = {
+                    "title": "First appointment evar",
+                    "start_date": Date.now(),
+                    "end_date": Date.now()
+                };
                 client.on('connect' , function(){
-                    var appointment = {
-                        "title": "First appointment evar",
-                        "start_date": Date.now(),
-                        "end_date": Date.now()
-                    };
+
                     client.emit('appointment:new', appointment, function(res){
                         expect(res.message).to.be('added');
                         expect(res.status).to.be(200);
+                        client.disconnect();
                         done();
                     });
                 })
@@ -50,6 +51,7 @@ describe('New Appointment', function(){
             .send(credentials)
             .end(function(err, res){
                 var token = res.body.token;
+
                 var options = {
                     transports: ['websocket'],
                     'force new connection': true,
@@ -66,6 +68,7 @@ describe('New Appointment', function(){
                     client.emit('appointment:new', appointment, function(res){
                         expect(res.message).to.be('added');
                         expect(res.status).to.be(200);
+                        client.disconnect();
                         done();
                     });
                 })

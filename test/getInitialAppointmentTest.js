@@ -33,6 +33,7 @@ describe('Initial loads', function(){
                 client.on('connect' , function(){
                    client.on('appointment:get', function(appointments){
                        expect(appointments).to.be.an('array');
+                       client.disconnect();
                        done();
                    })
                 })

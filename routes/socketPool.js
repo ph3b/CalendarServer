@@ -10,14 +10,15 @@ var addSocketToPool = function(socket){
     var user_id = jwt.decode(socket.handshake.query.token, settings.secret).user_id;
     pool.push({"user_id": user_id, socket: socket});
 };
+
 var removeSocket = function(socket){
     for(var i = 0; i < pool.length; i++){
         if(pool[i].socket == socket){
             pool.splice(i, 1);
             return;
         }
-        return -1;
     }
+    return -1;
 };
 var findSocketByUserId = function(user_id){
     for(var i = 0; i < pool.length; i++){
