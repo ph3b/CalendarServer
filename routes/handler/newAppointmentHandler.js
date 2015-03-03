@@ -8,8 +8,8 @@ module.exports = function(socket){
         var user_id = jwt.decode(socket.handshake.query.token, settings.secret).user_id;
         var appointment = {
             "title": req.title,
-            "start_date": req.start_date,
-            "created_date": req.end_date,
+            "date": req.date,
+            "time": req.time,
             "owned_by_user": user_id
         };
         db.query("insert into cal_appointment set ?", appointment, function(err, results, fields){

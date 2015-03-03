@@ -31,8 +31,9 @@ describe('Initial loads', function(){
                 var client = io.connect(apiUrl, options);
 
                 client.on('connect' , function(){
-                   client.on('appointment:get', function(appointments){
+                   client.on('appointment:initialreceive', function(appointments){
                        expect(appointments).to.be.an('array');
+                       console.log(appointments);
                        client.disconnect();
                        done();
                    })

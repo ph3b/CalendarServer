@@ -22,7 +22,6 @@ var optionsErlend = {
 };
 
 describe('Socket pool live test', function(){
-
     it('should add socket to socket pool after login in',function(done){
         var client = io.connect(apiUrl, optionsMathias);
 

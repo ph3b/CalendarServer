@@ -8,11 +8,6 @@ var io = require('socket.io-client');
 
 var apiUrl = 'http://localhost:3000';
 
-var options = {
-    transports: ['websocket'],
-    'force new connection': true
-};
-
 describe('User logs in', function(){
     it('should give user token when sending valid credentials',function(done){
         var credentials = {"username": "mathias", "password": "hawaii"};
@@ -63,7 +58,6 @@ describe('User logs in', function(){
                 })
             })
     });
-
     it('should not connect user to socket if no token is provided',function(done){
         var options = {
             transports: ['websocket'],

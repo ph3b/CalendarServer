@@ -29,6 +29,7 @@ module.exports = function(req, res){
         message = {"status": 401, "message": "Invalid credentials"};
         res.send(message);
         res.end();
+        return;
     });
 
 };

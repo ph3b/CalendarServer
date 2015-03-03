@@ -9,8 +9,10 @@ module.exports = function(socket){
     var user_id = jwt.decode(socket.handshake.query.token, settings.secret).user_id;
     db.query("select * from cal_appointment where owned_by_user= ?", user_id, function(err, results){
         if(err){
-            socket.emit("appointment:get", err);
+            socket.emit("appointment:initialreceive", err);
+            console.log('Came here');
         }
-        socket.emit('appointment:get', results);
+        socket.emit('appointment:initialreceive', results);
+        console.log('success!');
     })
 };
