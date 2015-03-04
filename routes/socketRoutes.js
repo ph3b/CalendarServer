@@ -6,6 +6,8 @@ var socketPool = require('./socketPool.js');
 var settings = require('./../config/settings.js');
 var newAppointmentRoute = require('./handler/newAppointmentHandler');
 var sendAllAppointments = require('./handler/sendInitialAppointmentsHandler');
+var sendInvitation = require('./handler/sendInvitationHandler');
+
 
 module.exports = function(io){
     io.set('authorization', socketioJwt.authorize({
@@ -18,10 +20,11 @@ module.exports = function(io){
             socketPool.removeSocket(socket);
         });
         //Routes
-
+        sendInvitation(socket, io);
         sendAllAppointments(socket);
         newAppointmentRoute(socket);
         //Socket socketPool
+
 
 
         // ============= REMOVE ASAP ZULU ================

@@ -22,13 +22,11 @@ var removeSocket = function(socket){
 };
 var findSocketByUserId = function(user_id){
     for(var i = 0; i < pool.length; i++){
-        if(pool[i].user_id == user_id){
+        if(pool[i].user_id === user_id){
             return pool[i].socket;
         }
-        else {
-            return -1
-        }
     }
+    return -1;
 };
 module.exports = {
     "pool" : pool,

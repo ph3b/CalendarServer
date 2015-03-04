@@ -1,10 +1,4 @@
-
 config/localstuff.js
-
-config/localstuff.js
-
-config/localstuff.js
-
-config/localstuff.js
-
-.idea/*
+./workspace.xml
+.idea/*.xml
+.idea/*.iml

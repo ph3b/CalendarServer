@@ -10,9 +10,7 @@ module.exports = function(socket){
     db.query("select * from cal_appointment where owned_by_user= ?", user_id, function(err, results){
         if(err){
             socket.emit("appointment:initialreceive", err);
-            console.log('Came here');
         }
         socket.emit('appointment:initialreceive', results);
-        console.log('success!');
     })
 };

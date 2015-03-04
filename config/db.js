@@ -13,18 +13,31 @@ catch(e){
     password = process.env.dbPw;
     console.log('bruker env')
 }
-var connection = mysql.createConnection({
+var options = {
     host: 'xlib2.mysql.domeneshop.no',
     user: 'xlib2',
     password: password,
     database : 'xlib2'
-});
+};
 
-connection.connect(function(err){
-    if(!err){
-        console.log('Connected to MySQL database');
-    } else {
-        console.log(err);
-    }
-});
+var connection = mysql.createConnection(options);
+
+var handleMySqlConnection = function(){
+    var connection = mysql.createConnection(options);
+    connection.connect(function(err){
+        if(!err){
+            console.log('Connected to MySQL database');
+        }
+        else if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+            handleDisconnect();
+        } else {
+            throw err;
+        }
+    });
+    connection.on('error', function(){
+        handleMySqlConnection();
+    })
+};
+handleMySqlConnection();
+
 module.exports = connection;
