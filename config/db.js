@@ -1,8 +1,11 @@
 /**
  * Created by mattiden on 02.03.15.
  */
+
+
 var mysql = require('mysql');
 var password;
+
 
 try{
     var passwordDb = require('./localstuff').dbpassword;
@@ -22,6 +25,7 @@ var options = {
 
 var connection = mysql.createConnection(options);
 
+/* istanbul ignore next */
 var handleMySqlConnection = function(){
     var connection = mysql.createConnection(options);
     connection.connect(function(err){
@@ -38,6 +42,7 @@ var handleMySqlConnection = function(){
         handleMySqlConnection();
     })
 };
+
 handleMySqlConnection();
 
 module.exports = connection;

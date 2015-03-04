@@ -15,6 +15,7 @@ module.exports = function(io){
         handshake: true
     }));
     io.on('connection', function(socket){
+        // Socket pool handler
         socketPool.addSocketToPool(socket);
         socket.on('disconnect', function(){
             socketPool.removeSocket(socket);
@@ -23,9 +24,6 @@ module.exports = function(io){
         sendInvitation(socket, io);
         sendAllAppointments(socket);
         newAppointmentRoute(socket);
-        //Socket socketPool
-
-
 
         // ============= REMOVE ASAP ZULU ================
         socket.on('appointment:get', function(){
