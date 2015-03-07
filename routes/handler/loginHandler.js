@@ -6,15 +6,11 @@ var _ = require('lodash');
 var settings = require('../../config/settings.js');
 var db = require('./../../config/db.js');
 
-var users = [
-    {"username": "mathias", "password": "tennis"},
-    {"username": "erlend", "password": "fotball"}
-];
-
 module.exports = function(req, res){
     var message;
     var user = {"username": req.body.username, "password": req.body.password};
     db.query("select * from cal_user where username = ?", user.username, function(err, response){
+        /* istanbul ignore if */
         if(err){
             res.send(err);
             return;

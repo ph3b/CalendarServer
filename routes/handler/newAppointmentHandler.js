@@ -17,6 +17,7 @@ module.exports = function(socket){
                 res({"message" : 'added', "status" : 200});
                 return;
             }
+            /* istanbul ignore if */
             if(err){
                 res.status(500);
                 res.send(err);

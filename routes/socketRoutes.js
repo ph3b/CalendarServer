@@ -15,6 +15,7 @@ module.exports = function(io){
         handshake: true
     }));
     io.on('connection', function(socket){
+        console.log("New connection");
         // Socket pool handler
         socketPool.addSocketToPool(socket);
         socket.on('disconnect', function(){
@@ -26,11 +27,18 @@ module.exports = function(io){
         newAppointmentRoute(socket);
 
         // ============= REMOVE ASAP ZULU ================
-        socket.on('appointment:get', function(){
+        socket.on('appointment:get', function(payload, callback){
             console.log('hellooo');
-            var appointment = {"title":"Du fikk dette", "date": "15.2.2015"};
+            var appointment = {"title": "Du fikk dette", "date": "15.2.2015"};
+
             io.to(socketPool.findSocketByUserId(1).id).emit('appointment:get', appointment);
-        })
+            if(typeof callback === typeof(Function)){
+                callback('Sent');
+            }
+
+
+
+        });
         // =======================================================
     });
 };

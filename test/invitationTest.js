@@ -26,8 +26,6 @@ var client2options = {
 };
 
 describe('User invites second user to appointment', function(){
-
-
         it('Client one should send invitation to client two.',function(done){
             var client1 = io.connect(apiUrl, client1options);
             client1.on('connect', function(){

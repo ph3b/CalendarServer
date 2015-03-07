@@ -5,7 +5,6 @@ var db = require('./../../config/db.js');
 var socketPool = require('./../socketPool.js');
 
 
-
 module.exports = function(socket, io){
     socket.on('appointment:sendinvitation', function(invitationInfo, callback){
         var invite = {
@@ -15,6 +14,7 @@ module.exports = function(socket, io){
             "read_by_user": false
         };
         db.query('insert into cal_userInvitedToAppointment set ?', invite, function(err, res){
+            /* istanbul ignore if */
             if(err){
                 //Do something
             }
@@ -31,6 +31,7 @@ module.exports = function(socket, io){
                             callback('sent');
                         }
                     }
+                    /* istanbul ignore if */
                     if(typeof callback === 'function'){
                         callback('sent');
                     }
