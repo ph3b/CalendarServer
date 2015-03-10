@@ -24,6 +24,7 @@ describe('New Appointment with invitation', function(){
     db.query('delete from cal_appointment');
 
     it('Should add new appointment to database and invite proper users', function(done){
+        this.timeout(10000);
         var client = io.connect(apiUrl, optionsMathias);
         var participants = [
             '2',
@@ -53,7 +54,7 @@ describe('New Appointment with invitation', function(){
     });
 
     it('Should add new appointment to database and invite proper users', function(done){
-
+        this.timeout(10000);
         var client = io.connect(apiUrl, optionsMathias);
         var participants = [
             '2',

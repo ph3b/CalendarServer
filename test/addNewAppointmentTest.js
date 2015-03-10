@@ -14,7 +14,7 @@ var apiUrl = 'http://localhost:3000';
 
 describe('New Appointment', function(){
     db.query('delete from cal_appointment');
-    /*it('Should add new appointment to database if logged in',function(done){
+    it('Should add new appointment to database if logged in',function(done){
         this.timeout(10000);
         var credentials = {"username": "mathias", "password": "hawaii"};
         send.post(apiUrl + '/login')
@@ -42,5 +42,4 @@ describe('New Appointment', function(){
                 })
             })
     });
-    */
 });
