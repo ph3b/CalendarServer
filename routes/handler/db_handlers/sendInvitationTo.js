@@ -13,7 +13,6 @@ module.exports = function(listOfUsersToInvite, appointment_id, callback){
         var convertToSql = function(user_id, appointment_id){
             return (" (" + user_id + "," + appointment_id + ")")
         };
-
         for(var i = 0; i<listOfUsersToInvite.length; i++){
             if(i === listOfUsersToInvite.length-1){
                 query += convertToSql(listOfUsersToInvite[i], appointment_id)

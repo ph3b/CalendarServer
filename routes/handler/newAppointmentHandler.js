@@ -25,6 +25,7 @@ module.exports = function(socket){
                         return;
                     }
                 } else {
+                    // Case 1: Det finnes en liste over id'er som skal inviteres
                     if(req.participants && req.participants.length){
                         inviteUsersToAppointment(req.participants, results.insertId, function(cb){
                             /* istanbul ignore if */
@@ -67,6 +68,7 @@ module.exports = function(socket){
                         })
                     }
                     else {
+                        // Case 2: Det finnes ikke en liste over id'er som skal inviteres
                         db.commit(function(err) {
                             if(!err){
                                 db.query('select * from cal_appointment where appointment_id = ?', results.insertId, function(err, res){

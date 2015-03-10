@@ -21,8 +21,6 @@ module.exports = function(socket){
             socket.emit("appointment:initialreceive", err);
             return;
         }
-
-
         socket.emit('appointment:initialreceive', results);
         var users = [];
         var user1 = {"user_id": 1, "fullname": "Mathias Iden"};
