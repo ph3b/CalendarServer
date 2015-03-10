@@ -16,7 +16,7 @@ module.exports = function(socket, io){
         db.query('insert into cal_userInvitedToAppointment set ?', invite, function(err, res){
             /* istanbul ignore if */
             if(err){
-                //Do something
+                callback('Error when sending invitation');
             }
             else {
                 db.query('select * from cal_appointment where appointment_id=?', invite.appointment_id, function(err, app){

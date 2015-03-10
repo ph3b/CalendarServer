@@ -26,16 +26,18 @@ var client2options = {
 };
 
 describe('User invites second user to appointment', function(){
+    db.query('delete from cal_userInvitedToAppointment'); // Deletes db
+
         it('Client one should send invitation to client two.',function(done){
             var client1 = io.connect(apiUrl, client1options);
             client1.on('connect', function(){
 
                 var client2 = io.connect(apiUrl,client2options);
                 client2.on('connect', function(){
-
                     db.query('select * from cal_appointment limit 1', function(err, appointment){
                         var sendInvitationTo = {"user_id": 2, "appointment_id": appointment[0].appointment_id};
                         client1.emit('appointment:sendinvitation', sendInvitationTo);
+
                         client2.on('appointment:get', function(app){
                             client2.on('invitation:get', function(inv){
                                 expect(inv.user_id).to.be.eql(2);
@@ -47,7 +49,6 @@ describe('User invites second user to appointment', function(){
                             })
                         });
                     });
-
                 })
             })
         })

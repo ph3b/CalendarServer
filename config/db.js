@@ -33,7 +33,7 @@ function replaceClientOnDisconnect(client) {
         }
         client = mysql.createConnection(client.config);
         replaceClientOnDisconnect(client);
-        connection.connect(function (error) {
+        client.connect(function (error) {
             if (error) {
                 console.log("Fatal error on db connection");
             }

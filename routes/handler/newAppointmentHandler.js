@@ -2,26 +2,101 @@ jwt = require('jsonwebtoken');
 var _ = require('lodash');
 var settings = require('../../config/settings.js');
 var db = require('./../../config/db.js');
+var inviteUsersToAppointment = require('./db_handlers/sendInvitationTo.js');
 
 module.exports = function(socket){
-    socket.on('appointment:new', function(req, res){
+    socket.on('appointment:new', function(req, callback){
         var user_id = jwt.decode(socket.handshake.query.token, settings.secret).user_id;
+
         var appointment = {
             "title": req.title,
             "date": req.date,
-            "time": req.time,
+            "start_time": req.start_time,
+            "end_time" : req.end_time,
             "owned_by_user": user_id
         };
-        db.query("insert into cal_appointment set ?", appointment, function(err, results, fields){
-            if(!err && typeof res == 'function'){
-                res({"message" : 'added', "status" : 200});
-                return;
-            }
-            /* istanbul ignore if */
-            if(err){
-                res.status(500);
-                res.send(err);
-            }
-        })
+        db.beginTransaction(function(_err){
+            db.query("insert into cal_appointment set ?", appointment, function(err, results){
+                /* istanbul ignore if */
+                if(err){
+                    if(typeof callback === typeof(Function)){
+                        var message = { "status": 500, "message": "Something went wrong"};
+                        callback(message);
+                        return;
+                    }
+                } else {
+                    if(req.participants && req.participants.length){
+                        inviteUsersToAppointment(req.participants, results.insertId, function(cb){
+                            /* istanbul ignore if */
+                            if(cb === 0){
+                                db.rollback(function(rb_err){
+                                    var message = { "status": 500, "message": "Something went wrong"};
+                                    if(typeof callback === typeof(Function)){
+                                        callback(message);
+                                        return;
+                                    }
+                                    return;
+                                })
+                            } else {
+                                db.commit(function(err) {
+                                    if(!err){
+                                        db.query('select * from cal_appointment where appointment_id = ?', results.insertId, function(err, res){
+                                            if(!err) {
+                                                socket.emit("appointment:get", res[0]);
+                                                if(typeof(callback) === typeof(Function)){
+                                                    callback({"message": 'added', "status": 200});
+                                                    return;
+                                                }
+                                                return;
+                                            }
+                                        });
+                                    }
+                                    /* istanbul ignore if */
+                                    if (err) {
+                                        db.rollback(function() {
+                                            var message = { "status": 500, "message": "Db error"};
+                                            if(typeof callback === typeof(Function)){
+                                                callback(message);
+                                                return;
+                                            }
+                                            return;
+                                        });
+                                    }
+                                });
+                            }
+                        })
+                    }
+                    else {
+                        db.commit(function(err) {
+                            if(!err){
+                                db.query('select * from cal_appointment where appointment_id = ?', results.insertId, function(err, res){
+                                    console.log("Kom hvor du skulle");
+                                    socket.emit("appointment:get", res[0]);
+                                    var message = {"message" : 'added', "status" : 200};
+                                    if(typeof callback === typeof(Function)){
+                                        callback(message);
+                                        return;
+                                    }
+                                    return;
+                                });
+                            }
+                            /* istanbul ignore if */
+                            if (err) {
+                                db.rollback(function() {
+                                    console.log(err);
+                                    var message = { "status": 500, "message": "Error users"};
+                                    if(typeof callback === typeof(Function)){
+                                        callback(message);
+                                        return;
+                                    }
+                                    throw err;
+                                    return;
+                                });
+                            }
+                        });
+                    }
+                }
+            })
+        });
     })
 };
