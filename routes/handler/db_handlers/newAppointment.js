@@ -14,7 +14,6 @@ module.exports = function(appointment, req, socket, callback){
                 if(typeof callback === typeof(Function)){
                     var message = { "status": 500, "message": "Something went wrong"};
                     callback(message);
-                    return;
                 }
             } else {
                 // Case 1: Det finnes en liste over id'er som skal inviteres
@@ -26,7 +25,6 @@ module.exports = function(appointment, req, socket, callback){
                                 var message = { "status": 500, "message": "Something went wrong"};
                                 if(typeof callback === typeof(Function)){
                                     callback(message);
-                                    return;
                                 }
                             })
                         } else {
@@ -37,7 +35,6 @@ module.exports = function(appointment, req, socket, callback){
                                             socket.emit("appointment:get", res[0]);
                                             if(typeof(callback) === typeof(Function)){
                                                 callback({"message": 'added', "status": 200});
-                                                return;
                                             }
                                         }
                                     });
@@ -47,7 +44,6 @@ module.exports = function(appointment, req, socket, callback){
                                         var message = { "status": 500, "message": "Db error"};
                                         if(typeof callback === typeof(Function)){
                                             callback(message);
-                                            return;
                                         }
                                     });
                                 }
@@ -65,7 +61,6 @@ module.exports = function(appointment, req, socket, callback){
                                 var message = {"message" : 'added', "status" : 200};
                                 if(typeof callback === typeof(Function)){
                                     callback(message);
-                                    return;
                                 }
                             });
                         }
