@@ -28,9 +28,11 @@ describe('New Appointment', function(){
                 };
                 var client = io.connect(apiUrl, options);
                 var appointment = {
-                    "title": "Second appointment evar",
+                    "title": "Sprintmøte",
+                    "description" : "Møte med teameet!",
                     "date": "21.2.2015",
-                    "start_time": "10:50"
+                    "start_time": "10:50",
+                    "end_time": "15:00"
                 };
                 client.on('connect' , function(){
                     client.emit('appointment:new', appointment, function(res){

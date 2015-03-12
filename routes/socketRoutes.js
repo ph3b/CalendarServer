@@ -7,6 +7,8 @@ var settings = require('./../config/settings.js');
 var newAppointmentRoute = require('./handler/newAppointmentHandler');
 var sendInitialData = require('./handler/sendInititalData');
 var sendInvitation = require('./handler/sendInvitationHandler');
+var getInitialData = require('./handler/db_handlers/getAppointmentsForCurrentUser');
+
 var db = require('./../config/db.js');
 
 module.exports = function(io){

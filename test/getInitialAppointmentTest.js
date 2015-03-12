@@ -33,7 +33,10 @@ describe('Initial loads', function(){
                 client.on('connect' , function(){
                    client.on('appointment:initialreceive', function(appointments){
                        expect(appointments).to.be.an('array');
+                       expect(appointments[0].owned_by_user).to.be(1)
+                       expect(appointments[0].appointment_id).to.a("number");
                        client.disconnect();
+                       console.log(appointments)
                        done();
                    })
                 })

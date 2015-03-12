@@ -13,7 +13,8 @@ module.exports = function(socket){
             "date": req.date,
             "start_time": req.start_time,
             "end_time" : req.end_time,
-            "owned_by_user": user_id
+            "owned_by_user": user_id,
+            "description" : req.description
         };
         db.beginTransaction(function(_err){
             db.query("insert into cal_appointment set ?", appointment, function(err, results){

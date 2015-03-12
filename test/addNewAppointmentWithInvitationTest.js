@@ -32,9 +32,11 @@ describe('New Appointment with invitation', function(){
             '553'
         ];
         var appointment = {
-            "title": "Second appointment",
+            "title": "Hyttetur",
+            "description" : "Nå blir det fisking",
             "date": "21.2.2015",
             "start_time": "10:50",
+            "end_time": "15:00",
             "participants" : participants
         };
         client.emit("appointment:new", appointment, function(res){
@@ -53,7 +55,7 @@ describe('New Appointment with invitation', function(){
         })
     });
 
-    it('Should add new appointment to database and invite proper users', function(done){
+    it('Should send new appointment to user', function(done){
         this.timeout(10000);
         var client = io.connect(apiUrl, optionsMathias);
         var participants = [
@@ -62,9 +64,11 @@ describe('New Appointment with invitation', function(){
             '553'
         ];
         var appointment = {
-            "title": "Second appointment",
+            "title": "Vaske bilden",
+            "description": "den er skitten",
             "date": "21.2.2015",
             "start_time": "10:50",
+            "end_time": "15:00",
             "participants" : participants
         };
         client.on('connect', function(){
