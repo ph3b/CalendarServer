@@ -8,6 +8,7 @@ var expect = require('expect.js');
 
 describe("Should update appointment", function(){
     it('should return success when appointment is updated correctly',function(done){
+        this.setTimeout(10000);
         var appointment = {
                 "title": "Sprintmøte",
                 "description" : "Møte med teameet!",
