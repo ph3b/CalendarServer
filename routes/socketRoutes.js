@@ -28,21 +28,5 @@ module.exports = function(io){
         sendInvitation(socket, io);
         sendInitialData(socket);
         newAppointmentRoute(socket);
-        // ============= REMOVE ASAP ZULU HONOLULU ===============
-        /* socket.on('appointment:get', function(payload, callback){
-            var appointment = {"title": "Du fikk dette", "date": "15.3.2015"};
-            io.to(socketPool.findSocketByUserId(1).id).emit('appointment:get', appointment);
-            if(typeof callback === typeof(Function)){
-                callback('Sent');
-            }
-        });
-        socket.on('appointment:push', function(payload, callback){
-            console.log(payload);
-            if(typeof callback === typeof(Function)){
-                callback('Sent');
-            }
-        }); */
-
-        // =======================================================
     });
 };

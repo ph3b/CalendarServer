@@ -14,7 +14,6 @@ module.exports = function(socket, io){
             "read_by_user": false
         };
         db.query('insert into cal_userInvitedToAppointment set ?', invite, function(err, res){
-            /* istanbul ignore if */
             if(err){
                 callback('Error when sending invitation');
             }
@@ -31,7 +30,6 @@ module.exports = function(socket, io){
                             callback('sent');
                         }
                     }
-                    /* istanbul ignore if */
                     if(typeof callback === 'function'){
                         callback('sent');
                     }
