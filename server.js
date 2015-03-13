@@ -10,8 +10,8 @@ module.exports = function(mode){
     app.use(cors());
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(bodyParser.json());
-    require('./routes/socketRoutes.js')(io);
-    require('./routes/restRoutes.js')(app);
+    require('./routes/routesSocket.js')(io);
+    require('./routes/routesHttp.js')(app);
 
     require('dns').lookup(require('os').hostname(), function (err, add, fam) {
         var port = 3000;

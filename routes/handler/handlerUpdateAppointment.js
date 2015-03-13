@@ -1,7 +1,7 @@
 /**
  * Created by mattiden on 12.03.15.
  */
-var updateAppointment = require('./db_handlers/updateAppointment');
+var updateAppointment = require('./db_handlers/dbUpdateAppointment');
 var db = require('./../../config/db.js');
 
 

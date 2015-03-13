@@ -4,10 +4,10 @@
 var socketioJwt = require('socketio-jwt');
 var socketPool = require('./socketPool.js');
 var settings = require('./../config/settings.js');
-var newAppointmentRoute = require('./handler/newAppointmentHandler');
-var sendInitialData = require('./handler/sendInititalData');
-var sendInvitation = require('./handler/sendInvitationHandler');
-var getInitialData = require('./handler/db_handlers/getAppointmentsForCurrentUser');
+var newAppointmentRoute = require('./handler/handlerNewAppointment');
+var sendInitialData = require('./handler/handlerSendInititalData');
+var sendInvitation = require('./handler/handlerSendInvitation');
+var getInitialData = require('./handler/db_handlers/dbGetAppointmentForUserId');
 
 var db = require('./../config/db.js');
 
