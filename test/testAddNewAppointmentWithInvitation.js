@@ -13,7 +13,14 @@ var settings = require('./../config/settings.js');
 var apiUrl = 'http://localhost:3000';
 
 var mathias = {"username" : "mathias", "user_id" : 1};
+var erlend = {"username" : "erlend", "user_id" : 2};
 
+
+var optionsErlend = {
+    transports: ['websocket'],
+    'force new connection': true,
+    'query': 'token=' + jwt.sign(erlend, settings.secret)
+};
 var optionsMathias = {
     transports: ['websocket'],
     'force new connection': true,
@@ -34,6 +41,26 @@ describe('New Appointment with invitation', function(){
         var appointment = {
             "title": "Hyttetur",
             "description" : "Nå blir det fisking",
+            "date": "21.2.2015",
+            "start_time": "10:50",
+            "end_time": "15:00",
+            "participants" : participants
+        };
+        client.emit("appointment:new", appointment, function(res){
+            client.disconnect();
+            done();
+        })
+    });
+
+    it('Should add new appointment to database and invite proper users(2)', function(done){
+        this.timeout(10000);
+        var client = io.connect(apiUrl, optionsErlend);
+        var participants = [
+            '1'
+        ];
+        var appointment = {
+            "title": "Hyttetur",
+            "description" : "Ladetur",
             "date": "21.2.2015",
             "start_time": "10:50",
             "end_time": "15:00",

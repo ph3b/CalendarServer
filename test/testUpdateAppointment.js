@@ -39,7 +39,7 @@ describe("Update appointments", function(){
                     expect(updatedApp[0].start_time).to.be.eql("20:00");
                     expect(updatedApp[0].end_time).to.be.eql("21:00");
                     db.query('delete from cal_appointment where appointment_id = ? ', res.insertId, function(err, res){
-                        done()
+                        done();
                     });
                 });
             })

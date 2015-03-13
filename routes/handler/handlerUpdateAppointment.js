@@ -3,13 +3,14 @@
  */
 var updateAppointment = require('./db_handlers/dbUpdateAppointment');
 var db = require('./../../config/db.js');
+var getSerializedAppointment = require('./db_handlers/dbGetAppointmentDetails');
 
 
 module.exports = function(socket){
-    socket.on('appointment:update', function(updatedAppointment){
-        updatedAppointment(updatedAppointment, function(res){
-            db.query('select from cal_appointment where appointment_id = ?', updatedAppointment.appointment_id, function(err, res){
-                socket.emit('appointment:get', res[0]);
+    socket.on('appointment:update', function(changedApp){
+        updateAppointment(changedApp, function(res){
+            getSerializedAppointment(changedApp.appointment_id, function(appointment){
+                socket.emit('appointment:get', appointment);
             })
         })
     })

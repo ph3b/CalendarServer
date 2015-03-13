@@ -3,6 +3,8 @@ var _ = require('lodash');
 var settings = require('../../config/settings.js');
 var db = require('./../../config/db.js');
 var newAppointment = require('./db_handlers/dbNewAppointment');
+var getSerializedAppointment = require('./db_handlers/dbGetAppointmentDetails');
+
 
 module.exports = function(socket){
     socket.on('appointment:new', function(req, callback){
@@ -17,8 +19,10 @@ module.exports = function(socket){
             "participants" : req.participants
         };
         newAppointment(appointment, function(message, addedAppointment){
-            socket.emit('appointment:get', addedAppointment);
-            if(typeof(callback) === typeof(Function)) callback(message);
+            getSerializedAppointment(addedAppointment.appointment_id, function(serializedAddedApp){
+                socket.emit('appointment:get', serializedAddedApp);
+                if(typeof(callback) === typeof(Function)) callback(message);
+            });
         })
     })
 };

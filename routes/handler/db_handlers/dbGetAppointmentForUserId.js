@@ -40,7 +40,7 @@ module.exports = function(user_id, callback){
             sql += " on(cal_appointment.appointment_id = cal_userInvitedToAppointment.appointment_id and cal_user.user_id = cal_userInvitedToAppointment.user_id)";
             sql += " where cal_appointment.appointment_id = ?";
             db.query(sql, app_id, function(err, res){
-                if(typeof callback === typeof(Function)) cb(err, res);
+                if(typeof cb === typeof(Function)) cb(err, res);
             })
         }
     };

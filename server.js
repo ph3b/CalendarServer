@@ -18,9 +18,11 @@ module.exports = function(mode){
         switch(mode){
             case 'test':
                 ip = 'localhost';
+                port = 3000;
                 break;
             default :
                 ip = add;
+                port = 4000;
         }
         http.listen(port, ip);
         console.log('Server running on: ' + ip + ':' + port);

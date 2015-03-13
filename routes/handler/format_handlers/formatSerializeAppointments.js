@@ -28,11 +28,8 @@ module.exports = function(arrayOfAppointments, callback){
                 participants.push(participant);
             }
         }
-
         serializedAppointment.participants = participants;
         serializedAppointments.push(serializedAppointment)
     }
-    serializedAppointments.forEach(function(app){
-    });
     callback(serializedAppointments);
 };
