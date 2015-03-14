@@ -29,7 +29,6 @@ describe('Initial loads', function(){
     before(function(done){
         db.query('delete from cal_appointment', function(err, res){
             if(err){
-                console.log(err);
             }
             var appointment1 = {
                 "title": "Appointment 1",
@@ -52,8 +51,6 @@ describe('Initial loads', function(){
 
             db.query(query, appointment1, function(err1, res){
                 db.query(query, appointment2, function(err2, res){
-                    console.log(err1);
-                    console.log(err2);
                     done();
                 })
             });

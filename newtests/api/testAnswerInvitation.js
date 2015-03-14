@@ -44,7 +44,6 @@ describe("User answers invitation", function(){
     before(function(done){
         db.query("insert into cal_appointment set ?", appointment, function(err, res){
             existingAppointmentId = res.insertId;
-            console.log(existingAppointmentId);
             db.query('insert into cal_userInvitedToAppointment(user_id, appointment_id) values(?,?)', [2, existingAppointmentId], function(err1, res1){
                 db.query('insert into cal_userInvitedToAppointment(user_id, appointment_id) values(?,?)', [3, existingAppointmentId], function(err2, res2){
                     console.log(err, err1, err2);

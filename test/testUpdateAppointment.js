@@ -49,7 +49,6 @@ describe("Update appointments", function(){
             existingAppointmentId = res.insertId;
             db.query('insert into cal_userInvitedToAppointment(user_id, appointment_id) values(?,?)', [2, existingAppointmentId], function(err1, res1){
                 db.query('insert into cal_userInvitedToAppointment(user_id, appointment_id) values(?,?)', [3, existingAppointmentId], function(err2, res2){
-                    console.log(err, err1, err2);
                     done();
                 })
             })

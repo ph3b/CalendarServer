@@ -21,8 +21,8 @@ module.exports = function(appointment, callback){
             // Case 1: Det finnes en liste over id'er som skal inviteres
             if(appointment.participants !== undefined){
                 inviteUsersToAppointment(appointment.participants, results.insertId, function(cb){
-                    /* istanbul ignore if */
                     if(cb === 0){
+                        /* istanbul ignore next */
                         db.rollback(function(rb_err){
                             var message = { "status": 500, "message": "Something went wrong"};
                             /* istanbul ignore if */
@@ -41,9 +41,9 @@ module.exports = function(appointment, callback){
                                 });
                             }
                             if (err) {
+                                /* istanbul ignore next */
                                 db.rollback(function() {
                                     var message = { "status": 500, "message": "Db error"};
-                                    /* istanbul ignore if */
                                     if(typeof callback === typeof(Function)){
                                         callback(message);
                                     }
@@ -64,6 +64,7 @@ module.exports = function(appointment, callback){
                             }
                         });
                     }
+                    /* istanbul ignore next */
                     if (err) {
                         db.rollback(function() {
                             console.log(err);
