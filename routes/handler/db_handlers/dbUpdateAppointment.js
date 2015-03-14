@@ -18,7 +18,6 @@ module.exports = function(newAppointment, callback){
     var query = "update cal_appointment";
     query += " set title = ?, date = ?, start_time = ?, end_time = ?, description = ?";
     query += " where cal_appointment.appointment_id = ?";
-
     db.query(query, appointment, function(err, res){
         if(err){
             console.log(err)

@@ -8,6 +8,7 @@ var newAppointmentRoute = require('./handler/handlerNewAppointment');
 var sendInitialData = require('./handler/handlerSendInititalData');
 var sendInvitation = require('./handler/handlerSendInvitation');
 var updateAppointment = require('./handler/handlerUpdateAppointment');
+var answerInvitation = require('./handler/handlerAnswerInvitation');
 
 var db = require('./../config/db.js');
 
@@ -17,17 +18,16 @@ module.exports = function(io){
         handshake: true
     }));
     io.on('connection', function(socket){
-        console.log("New connection");
         // Socket pool handler
         socketPool.addSocketToPool(socket);
         socket.on('disconnect', function(){
-            console.log("Socket disconnected");
             socketPool.removeSocket(socket);
         });
         //Routes
         sendInvitation(socket, io);
         sendInitialData(socket);
-        newAppointmentRoute(socket);
-        updateAppointment(socket);
+        newAppointmentRoute(socket, io);
+        updateAppointment(socket, io);
+        answerInvitation(socket, io);
     });
 };

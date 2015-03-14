@@ -4,7 +4,7 @@
 var db = require('./../../config/db.js');
 var settings = require('./../../config/settings.js');
 var jwt = require('jsonwebtoken');
-var getInitialAppointments = require('./db_handlers/dbGetAppointmentForUserId');
+var getInitialAppointments = require('./db_handlers/dbGetAppointmentsForUserId');
 var getInitialUserList = require('./db_handlers/dbGetUsers');
 
 module.exports = function(socket){

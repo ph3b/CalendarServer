@@ -17,7 +17,7 @@ module.exports = function(mode){
         var port = 3000;
         switch(mode){
             case 'test':
-                ip = 'localhost';
+                ip = '0.0.0.0';
                 port = 3000;
                 break;
             default :

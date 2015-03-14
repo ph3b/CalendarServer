@@ -4,7 +4,7 @@
 require('../server.js')('test');
 var expect = require('expect.js');
 var send = require('superagent');
-var io = require('socket.io-client');
+var socket = require('socket.io-client');
 
 var apiUrl = 'http://localhost:3000';
 
@@ -22,7 +22,6 @@ describe('User logs in', function(){
                 done();
             })
     });
-
     it('should give user error when sending invalid credentials',function(done){
         var invalidCredentials = {"username": "mathias", "password": "invalidpassword"};
 
@@ -35,7 +34,6 @@ describe('User logs in', function(){
                 done();
             })
     });
-
     it('should connect user to socket after authenticating',function(done){
         var credentials = {"username": "mathias", "password": "hawaii"};
 
@@ -48,8 +46,7 @@ describe('User logs in', function(){
                     'force new connection': true,
                     'query': 'token=' + token
                 };
-
-                var client = io.connect(apiUrl, options);
+                var client = socket.connect(apiUrl, options);
 
                 client.on('connect' , function(){
                     client.disconnect();
@@ -63,7 +60,7 @@ describe('User logs in', function(){
             transports: ['websocket'],
             'force new connection': true
         };
-        var client = io.connect(apiUrl, options);
+        var client = socket.connect(apiUrl, options);
         client.on('error' , function(response){
             expect(response).to.eql('Not authorized');
             client.disconnect();
@@ -71,6 +68,4 @@ describe('User logs in', function(){
 
         });
     });
-
-
 });

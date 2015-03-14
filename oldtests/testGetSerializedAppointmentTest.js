@@ -13,5 +13,5 @@ describe('Should get serialzed appointment', function(){
         })
     })
     */
-    
+
 });

@@ -3,7 +3,7 @@
  */
 var expect = require('expect.js');
 
-var getInitialData = require('./../routes/handler/db_handlers/dbGetAppointmentForUserId');
+var getInitialData = require('./../routes/handler/db_handlers/dbGetAppointmentsForUserId');
 
 describe('Get appointments for user', function(){
     it('should get all appointments for specified user_id',function(done){

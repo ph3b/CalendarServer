@@ -1,7 +1,6 @@
 /**
  * Created by mattiden on 04.03.15.
  */
-var socketPool = require('../routes/socketPool.js');
 var expect = require('expect.js');
 var http = require('superagent');
 var io = require('socket.io-client');
@@ -28,7 +27,6 @@ var client2options = {
 describe('User invites second user to appointment', function(){
 
     db.query('delete from cal_userInvitedToAppointment'); // Deletes db
-        /*
         it('Client one should send invitation to client two.',function(done){
             var client1 = io.connect(apiUrl, client1options);
             client1.on('connect', function(){
@@ -53,5 +51,4 @@ describe('User invites second user to appointment', function(){
                 })
             })
         })
-    */
 });
