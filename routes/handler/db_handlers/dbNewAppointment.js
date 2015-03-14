@@ -12,6 +12,7 @@ module.exports = function(appointment, callback){
 
     db.beginTransaction(function(_err){
         db.query("insert into cal_appointment set ?", tempAppointment, function(err, results){
+            /* istanbul ignore if */
             if(err){
                 if(typeof callback === typeof(Function)){
                     var message = { "status": 500, "message": "Something went wrong"};
