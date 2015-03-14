@@ -2,7 +2,6 @@
  * Created by mattiden on 12.03.15.
  */
 jwt = require('jsonwebtoken');
-var _ = require('lodash');
 var settings = require('../../../config/settings.js');
 var db = require('./../../../config/db.js');
 var inviteUsersToAppointment = require('./dbSendInvitationTo');
@@ -26,6 +25,7 @@ module.exports = function(appointment, callback){
                     if(cb === 0){
                         db.rollback(function(rb_err){
                             var message = { "status": 500, "message": "Something went wrong"};
+                            /* istanbul ignore if */
                             if(typeof callback === typeof(Function)){
                                 callback(message);
                             }
@@ -43,6 +43,7 @@ module.exports = function(appointment, callback){
                             if (err) {
                                 db.rollback(function() {
                                     var message = { "status": 500, "message": "Db error"};
+                                    /* istanbul ignore if */
                                     if(typeof callback === typeof(Function)){
                                         callback(message);
                                     }
@@ -63,11 +64,11 @@ module.exports = function(appointment, callback){
                             }
                         });
                     }
-                    /* istanbul ignore if */
                     if (err) {
                         db.rollback(function() {
                             console.log(err);
                             var message = { "status": 500, "message": "Error users"};
+                            /* istanbul ignore if */
                             if(typeof callback === typeof(Function)){
                                 callback(message);
                                 return;
