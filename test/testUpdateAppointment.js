@@ -9,6 +9,8 @@ var io = require('socket.io-client');
 var db = require('./../config/db.js');
 var settings = require('./../config/settings.js');
 var expect = require('expect.js');
+var jwt = require('jsonwebtoken');
+
 
 var appointment = {
     "title": "Sprintmøte",

@@ -6,7 +6,7 @@ var expect = require('expect.js');
 var io = require('socket.io-client');
 var db = require('./../config/db.js');
 var settings = require('./../config/settings.js');
-
+var jwt = require('jsonwebtoken');
 
 var apiUrl = 'http://localhost:3000';
 

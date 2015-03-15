@@ -1,7 +1,7 @@
 /**
  * Created by mattiden on 12.03.15.
  */
-jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');
 var settings = require('../../../config/settings.js');
 var db = require('./../../../config/db.js');
 var inviteUsersToAppointment = require('./dbSendInvitationTo');

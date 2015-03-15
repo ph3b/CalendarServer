@@ -1,11 +1,9 @@
-jwt = require('jsonwebtoken');
-var _ = require('lodash');
+var jwt = require('jsonwebtoken');
 var settings = require('../../config/settings.js');
 var db = require('./../../config/db.js');
 var newAppointment = require('./db_handlers/dbNewAppointment');
 var getSerializedAppointment = require('./db_handlers/dbGetAppointmentDetails');
-var socketPool = require('./../socketPool.js');
-
+var updateAllParticipants = require('./helpers/helperUpdateAllSockets');
 
 module.exports = function(socket, io){
     socket.on('appointment:new', function(req, callback){
@@ -20,17 +18,13 @@ module.exports = function(socket, io){
             "participants" : req.participants
         };
         newAppointment(appointment, function(message, addedAppointment){
-            getSerializedAppointment(addedAppointment.appointment_id, function(serializedAddedApp){
-                socket.emit('appointment:get', serializedAddedApp);
-                if(serializedAddedApp.participants.length > 0){
-                    serializedAddedApp.participants.forEach(function(participant){
-                        var sendInvitationToSocket = socketPool.findSocketByUserId(participant.user_id);
-                        if(sendInvitationToSocket !== -1){
-                            io.to(sendInvitationToSocket.id).emit('appointment:get', serializedAddedApp)
-                        }
-                    })
-                }
-                if(typeof(callback) === typeof(Function)) callback(message);
+
+            getSerializedAppointment(addedAppointment.appointment_id, function(appointment2){
+
+                updateAllParticipants(socket, io, appointment2,function(){
+
+                    if(typeof(callback) === typeof(Function)) callback(message);
+                })
             });
         })
     })

@@ -15,7 +15,6 @@ module.exports = function(req, res){
             res.send(err);
             return;
         }
-
         if(response.length && response[0].password === user.password){
             var token = jwt.sign({"username": response[0].username, "user_id" : response[0].user_id}, settings.secret);
             message = { "token": token, "status": 200, "message": "ok"};
@@ -26,7 +25,5 @@ module.exports = function(req, res){
         message = {"status": 401, "message": "Invalid credentials"};
         res.send(message);
         res.end();
-        return;
     });
-
 };
