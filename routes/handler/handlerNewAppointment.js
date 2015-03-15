@@ -4,6 +4,7 @@ var db = require('./../../config/db.js');
 var newAppointment = require('./db_handlers/dbNewAppointment');
 var getSerializedAppointment = require('./db_handlers/dbGetAppointmentDetails');
 var updateAllParticipants = require('./helpers/helperUpdateAllSockets');
+var sendNotificationToAllParticipants = require('./helpers/helperSendInvitationNotification');
 
 module.exports = function(socket, io){
     socket.on('appointment:new', function(req, callback){
@@ -19,11 +20,14 @@ module.exports = function(socket, io){
         };
         newAppointment(appointment, function(message, addedAppointment){
 
-            getSerializedAppointment(addedAppointment.appointment_id, function(appointment2){
+            getSerializedAppointment(addedAppointment.appointment_id, function(serializedAppointment){
 
-                updateAllParticipants(socket, io, appointment2,function(){
-
-                    if(typeof(callback) === typeof(Function)) callback(message);
+                updateAllParticipants(socket, io, serializedAppointment,function(){
+                    var app_id = serializedAppointment.appointment_id;
+                    var invitees = serializedAppointment.participants;
+                    sendNotificationToAllParticipants(socket, io, app_id, invitees, function(){
+                        if(typeof(callback) === typeof(Function)) callback(message);
+                    })
                 })
             });
         })

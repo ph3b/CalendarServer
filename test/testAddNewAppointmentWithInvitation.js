@@ -7,13 +7,11 @@ var db = require('./../config/db.js');
 var settings = require('./../config/settings.js');
 var jwt = require('jsonwebtoken');
 
-
 var apiUrl = 'http://localhost:3000';
 
 var mathias = {"username" : "mathias", "user_id" : 1};
 var erlend = {"username" : "erlend", "user_id" : 2};
 var bessen = {"username" : "bessen", "user_id" : 3};
-
 
 var optionsErlend = {
     transports: ['websocket'],

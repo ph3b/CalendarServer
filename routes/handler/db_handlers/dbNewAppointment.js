@@ -11,7 +11,7 @@ module.exports = function(appointment, callback){
     delete tempAppointment.participants;
 
     db.beginTransaction(function(_err){
-        db.query("insert into cal_appointment set ?", tempAppointment, function(err, results){
+        db.query("insert into cal_appointment set ?", tempAppointment, function(err, app){
             /* istanbul ignore if */
             if(err){
                 if(typeof callback === typeof(Function)){
@@ -21,7 +21,7 @@ module.exports = function(appointment, callback){
             }
             // Case 1: Det finnes en liste over id'er som skal inviteres
             if(appointment.participants !== undefined){
-                inviteUsersToAppointment(appointment.participants, results.insertId, function(cb){
+                inviteUsersToAppointment(appointment.participants, app.insertId, function(cb){
                     if(cb === 0){
                         /* istanbul ignore next */
                         db.rollback(function(rb_err){
@@ -34,7 +34,7 @@ module.exports = function(appointment, callback){
                     } else {
                         db.commit(function(err) {
                             if(!err){
-                                db.query('select * from cal_appointment where appointment_id = ?', results.insertId, function(err, res){
+                                db.query('select * from cal_appointment where appointment_id = ?', app.insertId, function(err, res){
                                     if(!err) {
                                         var message = { "status": 200, "message": "added"};
                                         if(typeof(callback) === typeof(Function)) callback(message, res[0]);
@@ -58,7 +58,7 @@ module.exports = function(appointment, callback){
                 // Case 2: Det finnes ikke en liste over id'er som skal inviteres
                 db.commit(function(err) {
                     if(!err){
-                        db.query('select * from cal_appointment where appointment_id = ?', results.insertId, function(err, res){
+                        db.query('select * from cal_appointment where appointment_id = ?', app.insertId, function(err, res){
                             if(!err){
                                 var message = { "status": 200, "message": "added"};
                                 if(typeof(callback) === typeof(Function)) callback(message, res[0]);
