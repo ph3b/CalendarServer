@@ -14,6 +14,7 @@ module.exports = function(newAppointment, callback){
         newAppointment.description,
         newAppointment.appointment_id
     ];
+
     var query = "update cal_appointment";
     query += " set title = ?, date = ?, start_time = ?, end_time = ?, description = ?";
     query += " where cal_appointment.appointment_id = ?";

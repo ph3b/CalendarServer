@@ -11,6 +11,7 @@ require('../server.js')('test');
 var expect = require('expect.js');
 var send = require('superagent');
 var io = require('socket.io-client');
+var jwt = require('jsonwebtoken');
 
 var apiUrl = 'http://localhost:3000';
 

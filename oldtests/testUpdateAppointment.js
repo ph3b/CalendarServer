@@ -4,6 +4,7 @@
 var updateAppointment = require('./../routes/handler/db_handlers/dbUpdateAppointment');
 var db = require('./../config/db.js');
 var expect = require('expect.js');
+var jwt = require('jsonwebtoken');
 
 
 describe("Update appointments", function(){

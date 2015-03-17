@@ -16,7 +16,7 @@ module.exports = function(user_id, callback){
     query += " from cal_appointment";
     query += " left join cal_userInvitedToAppointment";
     query += " on(cal_appointment.appointment_id = cal_userInvitedToAppointment.appointment_id)";
-    query += " where user_id = ? or owned_by_user = ?";
+    query += " where (user_id = ? and invite_accepted !=    2) or owned_by_user = ?";
     query += " group by cal_appointment.appointment_id";
 
     db.query(query, [user_id, user_id], function(err, appointmentList){

@@ -19,7 +19,6 @@ module.exports = function(socket, io){
             "participants" : req.participants
         };
         newAppointment(appointment, function(message, addedAppointment){
-
             getSerializedAppointment(addedAppointment.appointment_id, function(serializedAppointment){
 
                 updateAllParticipants(socket, io, serializedAppointment,function(){

@@ -24,11 +24,13 @@ var client = mysql.createConnection({
 /* istanbul ignore next */
 function replaceClientOnDisconnect(client) {
     client.on("error", function (err) {
+        console.log("Error. Reconnecting");
         if (!err.fatal) {
             return;
         }
 
         if (err.code !== "PROTOCOL_CONNECTION_LOST") {
+
             throw err;
         }
         client = mysql.createConnection(client.config);

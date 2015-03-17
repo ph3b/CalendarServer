@@ -9,18 +9,18 @@ var inviteUsersToAppointment = require('./dbSendInvitationTo');
 module.exports = function(appointment, callback){
     var tempAppointment = JSON.parse(JSON.stringify(appointment)); //Deep copy hack
     delete tempAppointment.participants;
-
     db.beginTransaction(function(_err){
         db.query("insert into cal_appointment set ?", tempAppointment, function(err, app){
             /* istanbul ignore if */
             if(err){
                 if(typeof callback === typeof(Function)){
+                    console.log(err);
                     var message = { "status": 500, "message": "Something went wrong"};
                     callback(message);
                 }
             }
             // Case 1: Det finnes en liste over id'er som skal inviteres
-            if(appointment.participants !== undefined){
+            if(appointment.participants !== undefined && appointment.participants.length > 0){
                 inviteUsersToAppointment(appointment.participants, app.insertId, function(cb){
                     if(cb === 0){
                         /* istanbul ignore next */
@@ -42,6 +42,7 @@ module.exports = function(appointment, callback){
                                 });
                             }
                             if (err) {
+                                console.log(err);
                                 /* istanbul ignore next */
                                 db.rollback(function() {
                                     var message = { "status": 500, "message": "Db error"};
@@ -67,6 +68,7 @@ module.exports = function(appointment, callback){
                     }
                     /* istanbul ignore next */
                     if (err) {
+                        console.log(err);
                         db.rollback(function() {
                             console.log(err);
                             var message = { "status": 500, "message": "Error users"};
@@ -80,7 +82,6 @@ module.exports = function(appointment, callback){
                     }
                 });
             }
-
     })
 });
 };

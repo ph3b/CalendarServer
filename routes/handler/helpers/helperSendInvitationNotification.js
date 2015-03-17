@@ -17,7 +17,6 @@ module.exports = function(socket, io, appointment_id, listOfUsers, callback){
                 io.to(userSocket.id).emit("notification", invitationMessage);
             }
         });
-
         if(typeof(callback) === typeof(Function)) callback();
     })
 };

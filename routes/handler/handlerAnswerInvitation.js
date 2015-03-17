@@ -10,7 +10,6 @@ var updateAllParticipants = require('./helpers/helperUpdateAllSockets');
 
 module.exports = function(socket,io){
     socket.on("invitation:reply", function(answer, callback){
-
         var user_id = jwt.decode(socket.handshake.query.token, settings.secret).user_id;
         var appointment_id = answer.appointment_id;
         var reply = answer.invite_accepted;

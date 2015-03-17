@@ -9,11 +9,9 @@ module.exports = function(socket, io, appointment, callback){
         appointment.participants.forEach(function(participant){
 
             var sendInvitationToSocket = socketPool.findSocketByUserId(participant.user_id);
-
             if(sendInvitationToSocket !== -1){
-                if(participant.invite_accepted !== 2){
+
                     io.to(sendInvitationToSocket.id).emit('appointment:get', appointment)
-                }
             }
         });
     }

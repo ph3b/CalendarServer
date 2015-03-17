@@ -75,25 +75,30 @@ describe('Initial loads', function(){
             })
         })
     });
-    it('Should receive user list from server',function(done){
+    it('Should receive user list from server. Current user should not be included',function(done){
         var client = io.connect(apiUrl,clientOptions);
         client.on('connect', function(){
             client.on('users:initialreceive', function(users){
+                var foundCurrentUser = false;
                 expect(users).to.be.an('array');
                 expect(users[0]).to.have.property('user_id');
                 expect(users[0]).to.have.property('fullname');
+                users.forEach(function(user){
+                        if(user.user_id == 1){
+                            foundCurrentUser = true;
+                        }
+                });
+                expect(foundCurrentUser).to.be(false);
                 client.disconnect();
                 done();
             })
         })
     });
-    it('First user in userlist should be current user',function(done){
+    it('Should get current user',function(done){
         var client = io.connect(apiUrl,clientOptions2);
         client.on('connect', function(){
-            client.on('users:initialreceive', function(users){
-                expect(users).to.be.an('array');
-                expect(users[0].user_id).to.be.eql(2);
-                expect(users[0].fullname).to.be.eql("Erlend Stenberg");
+            client.on('user:current', function(user){
+                expect(user.user_id).to.be(2);
                 client.disconnect();
                 done();
             })
