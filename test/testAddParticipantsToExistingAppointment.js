@@ -66,7 +66,7 @@ describe("Update appointment with new participantlist", function(){
             done();
         })
     });
-    it('should changed participant list to new participant list and notify owner', function(done){
+    it('should change participantlist and notify owner', function(done){
         appointment = {
             "appointment_id" : existingAppointmentId,
             "title": "Sprintmøte redigert",
@@ -95,6 +95,74 @@ describe("Update appointment with new participantlist", function(){
 
         })
     });
+    it('should add new person to participant list and notify owner', function(done){
+        appointment = {
+            "appointment_id" : existingAppointmentId,
+            "title": "Sprintmøte redigert",
+            "description" : "Møte med teameet!",
+            "date": "21.2.2015",
+            "start_time": "12:50",
+            "end_time": "14:00",
+            "owned_by_user": 1,
+            "participants" : ['2', '3', '552']
+        };
+        var mathiasIo = io.connect(apiUrl, mathiasOptions);
+        mathiasIo.on('connect', function(){
+            mathiasIo.emit('appointment:update', appointment);
+            mathiasIo.on('appointment:get', function(editedApp){
+                var counter = 0;
+                editedApp.participants.forEach(function(part){
+                    if(part.user_id == 552){
+                        counter = 1;
+                    }
+                });
+                expect(editedApp.participants.length).to.be(3);
+                expect(counter).to.be(1);
+                mathiasIo.disconnect();
+                done();
+            })
+
+        })
+    });
+    it('should add and remove users in participant list and notify owner', function(done){
+        this.timeout(5000);
+        appointment = {
+            "appointment_id" : existingAppointmentId,
+            "title": "Sprintmøte redigert",
+            "description" : "Møte med teameet!",
+            "date": "21.2.2015",
+            "start_time": "12:50",
+            "end_time": "14:00",
+            "owned_by_user": 1,
+            "participants" : ['2', '3', '553']
+        };
+        var mathiasIo = io.connect(apiUrl, mathiasOptions);
+        mathiasIo.on('connect', function(){
+            mathiasIo.emit('appointment:update', appointment);
+            mathiasIo.on('appointment:get', function(editedApp){
+                var counter1 = 0;
+                var counter2 = 0;
+                editedApp.participants.forEach(function(part){
+                    if(part.user_id == 552){
+                        counter1 = 1;
+                    }
+                });
+                editedApp.participants.forEach(function(part){
+                    if(part.user_id == 553){
+                        counter2 = 1;
+                    }
+                });
+                expect(editedApp.participants.length).to.be(3);
+                expect(counter1).to.be(0);
+                expect(counter2).to.be(1);
+                mathiasIo.disconnect();
+                done();
+            })
+
+        })
+    });
+
+
     it('should changed participant list to new participant list and notify send uppate to all members', function(done){
         this.timeout(5000);
         appointment = {

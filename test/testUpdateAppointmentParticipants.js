@@ -59,7 +59,7 @@ describe('UNIT - It should update existing participant list', function(){
     });
 
     it('It should return list of user_ids which should be added', function(done){
-        var newParticipantList = [2, 4, 5];
+        var newParticipantList = ['2', '4', '5'];
         updateParticipantList(exisitingApp, newParticipantList, function(action, addedList, removedList){
             expect(action).to.be('addAndRemove');
             expect(addedList.length).to.not.be(0);
@@ -69,7 +69,7 @@ describe('UNIT - It should update existing participant list', function(){
     });
 
     it('Should give callback with null if newlist if equal oldlist', function(done){
-        var newParticipantList = [2, 3];
+        var newParticipantList = ['2', '3'];
         updateParticipantList(exisitingApp, newParticipantList, function(action, addedList, removedList){
             expect(action).to.be('nothing');
             expect(addedList).to.be(null);
