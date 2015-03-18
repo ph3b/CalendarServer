@@ -15,7 +15,6 @@ module.exports = function(socket, io, appointment, callback){
             }
         });
     }
-
     var ownerSocket = socketPool.findSocketByUserId(appointment.owned_by_user);
     if(ownerSocket !== -1){
         io.to(ownerSocket.id).emit('appointment:get', appointment);

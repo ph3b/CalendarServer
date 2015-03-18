@@ -1,9 +1,9 @@
 /**
  * Created by mattiden on 17.03.15.
  */
-var updateParticipantList = require('./../../routes/handler/db_handlers/dbUpdateAppointmentParticipants');
+var updateParticipantList = require('./../routes/handler/db_handlers/formatGetParticipantChanges');
 var expect = require('expect.js');
-var db = require('./../../config/db');
+var db = require('./../config/db');
 
 var appointment = {
     "title": "Påskeferie",
@@ -38,49 +38,53 @@ describe('UNIT - It should update existing participant list', function(){
             if(err) console.log(err);
         })
     });
+
     it('It should return list of user_ids which should be removed', function(done){
-        var newParticipantList = [2];
-        var _removedList = [3];
-        var _addedList = [];
-        updateParticipantList(exisitingApp, newParticipantList, function(newList, addedList, removedList){
-            expect(newList).to.be(newParticipantList);
-            expect(addedList[0]).to.be(undefined);
-            expect(removedList.length).to.be(1);
+        var newParticipantList = ["2"];
+        updateParticipantList(exisitingApp, newParticipantList, function(action, addedList, removedList){
+            expect(action).to.be('remove');
+            expect(addedList).to.be(null);
             expect(removedList[0]).to.be(3);
             done();
         })
     });
+    it('It should return list of user_ids which should be removed', function(done){
+        var newParticipantList = [];
+        updateParticipantList(exisitingApp, newParticipantList, function(action, addedList, removedList){
+            expect(action).to.be("remove");
+            expect(addedList).to.be(null);
+            expect(removedList[0]).to.be(2);
+            done()
+        })
+    });
+
     it('It should return list of user_ids which should be added', function(done){
         var newParticipantList = [2, 4, 5];
-        var _removedList = [3];
-        var _addedList = [];
-        _addedList.push(4);
-        _addedList.push(5);
-        updateParticipantList(exisitingApp, newParticipantList, function(newList, addedList, removedList){
-            expect(newList).to.be(newParticipantList);
-            expect(addedList[0]).to.be(4);
-            expect(addedList[1]).to.be(5);
+        updateParticipantList(exisitingApp, newParticipantList, function(action, addedList, removedList){
+            expect(action).to.be('addAndRemove');
+            expect(addedList.length).to.not.be(0);
+            expect(removedList.length).to.not.be(0);
             done();
         })
     });
-    it('Should give list with both removed and added users', function(done){
-        var newParticipantList = [2, 5, 9];
-        updateParticipantList(exisitingApp, newParticipantList, function(newList, addedList, removedList){
-            expect(newList).to.be(newParticipantList);
-            expect(addedList[0]).to.be(5);
-            expect(addedList[1]).to.be(9);
-            expect(removedList[0]).to.be(3);
-            done();
-        })
-    })
+
     it('Should give callback with null if newlist if equal oldlist', function(done){
         var newParticipantList = [2, 3];
-        updateParticipantList(exisitingApp, newParticipantList, function(newList, addedList, removedList){
-            expect(newList).to.be(newParticipantList);
+        updateParticipantList(exisitingApp, newParticipantList, function(action, addedList, removedList){
+            expect(action).to.be('nothing');
             expect(addedList).to.be(null);
             expect(removedList).to.be(null);
             done();
         })
     });
 
+    it('Should give callback with null if participantlist is empty', function(done){
+        var emtpyParticipantList = [];
+        updateParticipantList(exisitingApp, emtpyParticipantList, function(action, addedList, removedList){
+            expect(action).to.be('remove');
+            expect(addedList).to.be(null);
+            expect(removedList.length).to.be(2);
+            done();
+        })
+    });
 });

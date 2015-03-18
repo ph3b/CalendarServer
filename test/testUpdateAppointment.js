@@ -42,7 +42,6 @@ var bessenOptions = {
     'force new connection': true,
     'query': 'token=' + jwt.sign(bessen, settings.secret)
 };
-
 var existingAppointmentId;
 
 describe("Update appointments", function(){
@@ -69,7 +68,8 @@ describe("Update appointments", function(){
             "date": "21.2.2015",
             "start_time": "12:50",
             "end_time": "14:00",
-            "owned_by_user": 1
+            "owned_by_user": 1,
+            "participants" : ['2' , '3']
         };
         var client = io.connect(apiUrl, mathiasOptions);
         client.on('connect', function(){
@@ -92,7 +92,8 @@ describe("Update appointments", function(){
             "date": "21.2.2015",
             "start_time": "12:50",
             "end_time": "14:00",
-            "owned_by_user": 1
+            "owned_by_user": 1,
+            "participants" : ['2','3']
         };
         var client = io.connect(apiUrl, mathiasOptions);
         client.on('connect', function(){
@@ -108,11 +109,12 @@ describe("Update appointments", function(){
         appointment = {
             "appointment_id" : existingAppointmentId,
             "title": "Sprintmøte redigert",
-            "description" : "Møte med teameet!",
+            "description" : "Møte med shiiet!",
             "date": "21.2.2015",
             "start_time": "12:50",
             "end_time": "14:00",
-            "owned_by_user": 1
+            "owned_by_user": 1,
+            "participants" : ['2','3']
         };
         var mathias = io.connect(apiUrl, mathiasOptions);
         var erlend = io.connect(apiUrl, erlendOptions);
@@ -133,7 +135,8 @@ describe("Update appointments", function(){
                             expect(eApp.end_time).to.be.eql("14:00");
                             done();
                         })
-                    })
+                    });
+
                 })
             })
         });

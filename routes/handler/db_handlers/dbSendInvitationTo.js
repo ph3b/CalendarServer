@@ -3,10 +3,6 @@
  */
 var db = require('./../../../config/db');
 
-//
-// Skal sende invitasjoner til mange brukere samtidig
-//
-
 module.exports = function(listOfUsersToInvite, appointment_id, callback){
         var query = "insert into cal_userInvitedToAppointment(user_id, appointment_id) values";
 
