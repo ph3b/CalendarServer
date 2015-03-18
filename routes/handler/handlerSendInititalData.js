@@ -11,7 +11,6 @@ module.exports = function(socket){
     var user_id = jwt.decode(socket.handshake.query.token, settings.secret).user_id;
     var current_user = {"user_id" : user_id};
     var currentUser;
-
     getInitialAppointments(user_id, function(apps){
         getInitialUserList(function(users){
             // Removes currently logged in user

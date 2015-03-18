@@ -31,6 +31,7 @@ var optionsBessen = {
 };
 
 describe('User creates new appointment with preselected participants', function(){
+    this.timeout(10000);
     before(function(done){
         db.query('delete from cal_appointment', function(){
             done();

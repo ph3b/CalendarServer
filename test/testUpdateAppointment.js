@@ -45,6 +45,7 @@ var bessenOptions = {
 var existingAppointmentId;
 
 describe("Update appointments", function(){
+    this.timeout(10000);
     before(function(done){
         db.query("insert into cal_appointment set ?", appointment, function(err, res){
             existingAppointmentId = res.insertId;

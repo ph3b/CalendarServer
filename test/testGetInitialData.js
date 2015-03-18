@@ -25,7 +25,7 @@ var clientOptions2 = {
 };
 
 describe('Initial loads', function(){
-
+    this.timeout(10000);
     before(function(done){
         db.query('delete from cal_appointment', function(err, res){
             if(err){

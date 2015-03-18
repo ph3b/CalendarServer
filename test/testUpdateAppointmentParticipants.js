@@ -15,6 +15,7 @@ var appointment = {
 };
 var exisitingApp;
 describe('UNIT - It should update existing participant list', function(){
+    this.timeout(10000);
     before(function(done){
         db.query('insert into cal_appointment set ?', appointment, function(err, res){
             if(!err){
@@ -27,7 +28,6 @@ describe('UNIT - It should update existing participant list', function(){
             } else {
                 console.log(err);
             }
-
         })
     });
     after(function(done){

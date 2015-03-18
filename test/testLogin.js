@@ -4,6 +4,7 @@ var io = require('socket.io-client');
 var apiUrl = 'http://localhost:3000';
 
 describe('User logs in', function(){
+    this.timeout(10000);
     it('should give user token when sending valid credentials',function(done){
         var credentials = {"username": "mathias", "password": "hawaii"};
         send.post(apiUrl + '/login')

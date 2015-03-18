@@ -42,8 +42,8 @@ module.exports = function(appointment, callback){
                                 });
                             }
                             if (err) {
-                                console.log(err);
                                 /* istanbul ignore next */
+                                console.log(err);
                                 db.rollback(function() {
                                     var message = { "status": 500, "message": "Db error"};
                                     if(typeof callback === typeof(Function)){

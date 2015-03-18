@@ -42,6 +42,7 @@ var appointment = {
 var exisitingApp;
 
 describe('Notifications when inviting users to appointment', function(){
+    this.timeout(10000);
     before(function(done){
         var app2 = JSON.parse(JSON.stringify(appointment));
         delete app2.participants;
@@ -69,7 +70,6 @@ describe('Notifications when inviting users to appointment', function(){
         var evalTest = function(){
             expect(erlendRes).to.be.eql(bessenRes);
             expect(erlendRes.title).to.be.eql("Hyttetur");
-            expect(erlendRes.description).to.be.eql("Nå blir det fisking");
             expect(erlendRes.date).to.be.eql("21.2.2015");
             mathiasIo.disconnect();
             erlendIo.disconnect();
@@ -85,14 +85,14 @@ describe('Notifications when inviting users to appointment', function(){
             erlendIo.on('connect', function(){
                 bessenIo.on('connect', function(){
                     mathiasIo.emit("appointment:new", appointment);
-                    erlendIo.on('notification', function(erlendNotification){
+                    erlendIo.on('invite:new', function(erlendNotification){
                         erlendRes = erlendNotification;
                         cbCounter++;
                         if(cbCounter == 2){
                             evalTest();
                         }
                     });
-                    erlendIo.on('notification', function(bessenNotification){
+                    erlendIo.on('invite:new', function(bessenNotification){
                         bessenRes = bessenNotification;
                         cbCounter++;
                         if(cbCounter == 2){
@@ -104,7 +104,6 @@ describe('Notifications when inviting users to appointment', function(){
         })
 
     });
-
     it('Should send notification to user after inviting him to existing appointment',function(done){
         var inviteMessage = {
             "user_id": 2,
@@ -116,10 +115,9 @@ describe('Notifications when inviting users to appointment', function(){
         mathiasIo.on('connect', function(){
             erlendIo.on('connect', function(){
                 mathiasIo.emit("invitation:send", inviteMessage);
-                erlendIo.on('notification', function(notification){
+                erlendIo.on('invite:new', function(notification){
                     expect(notification.title).to.be.eql('Hyttetur');
                     expect(notification.date).to.be.eql('21.2.2015');
-                    expect(notification.description).to.be.eql('Nå blir det fisking');
                     erlendIo.disconnect();
                     mathiasIo.disconnect();
                     done();

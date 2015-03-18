@@ -9,14 +9,16 @@ var sendInitialData = require('./handler/handlerSendInititalData');
 var sendInvitation = require('./handler/handlerSendInvitation');
 var updateAppointment = require('./handler/handlerUpdateAppointment');
 var answerInvitation = require('./handler/handlerAnswerInvitation');
-
+var deleteAppointment = require('./handler/handlerDeleteAppointment');
 var db = require('./../config/db.js');
 
 module.exports = function(io){
+
     io.set('authorization', socketioJwt.authorize({
         secret: settings.secret,
         handshake: true
     }));
+
     io.on('connection', function(socket){
         // Socket pool handler
         socketPool.addSocketToPool(socket);
@@ -29,5 +31,6 @@ module.exports = function(io){
         newAppointmentRoute(socket, io);
         updateAppointment(socket, io);
         answerInvitation(socket, io);
+        deleteAppointment(socket, io);
     });
 };

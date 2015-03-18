@@ -7,6 +7,7 @@ var db = require('./../config/db');
 
 
 describe('UNIT - It should delete invited users from appointment', function(){
+    this.timeout(10000);
     var appointment = {
         "title": "Påskeferie",
         "description" : "Blir deilig med pause",

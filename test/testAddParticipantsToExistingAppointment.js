@@ -1,10 +1,4 @@
 /**
- * Created by mattiden on 17.03.15.
- */
-/**
- * Created by mattiden on 13.03.15.
- */
-/**
  * Created by mattiden on 12.03.15.
  */
 require('./../server.js')('test');
@@ -49,6 +43,7 @@ var bessenOptions = {
 var existingAppointmentId;
 
 describe("Update appointment with new participantlist", function(){
+    this.timeout(10000);
     before(function(done){
         db.query("insert into cal_appointment set ?", appointment, function(err, res){
             existingAppointmentId = res.insertId;
@@ -66,7 +61,7 @@ describe("Update appointment with new participantlist", function(){
             done();
         })
     });
-    it('should change participantlist and notify owner', function(done){
+    it('should remove a participant and notify owner', function(done){
         appointment = {
             "appointment_id" : existingAppointmentId,
             "title": "Sprintmøte redigert",
@@ -214,8 +209,6 @@ describe("Update appointment with new participantlist", function(){
                     })
                 })
             })
-
-
         })
     });
 

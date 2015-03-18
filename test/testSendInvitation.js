@@ -35,6 +35,7 @@ var existingAppointmentId;
 var apiUrl = 'http://localhost:3000';
 
 describe('User invites user to existing appointment', function(){
+    this.timeout(10000);
     before(function(done){
         db.query("insert into cal_appointment set ?", appointment, function(err, res){
             if(!err){

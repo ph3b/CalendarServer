@@ -20,6 +20,7 @@ var clientOptions = {
 };
 
 describe('User creates new appointment', function(){
+    this.timeout(10000);
     before(function(done){
         db.query('delete from cal_appointment', function(err, res){
             done();
