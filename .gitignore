@@ -1,4 +1,3 @@
-config/localstuff.js
 ./workspace.xml
 .idea/*.xml
 .idea/*.iml
