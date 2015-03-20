@@ -11,4 +11,3 @@ Written in Node.JS using Socket.IO and MySQL.
 
 # To test
     $ npm test
-
