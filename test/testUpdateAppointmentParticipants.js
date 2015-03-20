@@ -1,7 +1,7 @@
 /**
  * Created by mattiden on 17.03.15.
  */
-var updateParticipantList = require('./../routes/handler/db_handlers/formatGetParticipantChanges');
+var updateParticipantList = require('./../routes/handler/format_handlers/formatGetParticipantChanges');
 var expect = require('expect.js');
 var db = require('./../config/db');
 

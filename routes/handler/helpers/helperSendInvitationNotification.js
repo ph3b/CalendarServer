@@ -8,6 +8,14 @@ var db = require('./../../../config/db');
 var jwt = require('jsonwebtoken');
 
 module.exports = function(socket, io, appointment_id, listOfUsers, callback){
+    var formattedAddedUsers = [];
+    if(listOfUsers !== null){
+        listOfUsers.forEach(function(user_id){
+            formattedAddedUsers.push(parseInt(user_id));
+        });
+    } else {
+        formattedAddedUsers = null;
+    }
     if(listOfUsers !== null){
         getSerializedAppointment(appointment_id, function(serializedAppointment){
             var invitationMessage = {
@@ -15,7 +23,7 @@ module.exports = function(socket, io, appointment_id, listOfUsers, callback){
                 "date" : serializedAppointment.date,
                 "sender" : jwt.decode(socket.handshake.query.token, settings.secret).username
             };
-            listOfUsers.forEach(function(user_id){
+            formattedAddedUsers.forEach(function(user_id){
                 var userSocket = socketPool.findSocketByUserId(user_id);
                 if(userSocket !== -1){
                     io.to(userSocket.id).emit('invite:new', invitationMessage);

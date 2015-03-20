@@ -1,33 +1,28 @@
 /**
  * Created by mattiden on 12.03.15.
  */
-var updateAppointment = require('./db_handlers/dbUpdateAppointment');
 var db = require('./../../config/db.js');
-var getSerializedAppointment = require('./db_handlers/dbGetAppointmentDetails');
-var updateAllParticipants = require('./helpers/helperUpdateAllSockets');
+
+var updateAppointmentWithNewData = require('./db_handlers/dbUpdateAppointment');
+var getTheNewSerializedAppoint = require('./db_handlers/dbGetAppointmentDetails');
+var updateAllRelevantClients = require('./helpers/helperUpdateAllSockets');
 var uninviteRemovedUsers = require('./db_handlers/dbDeleteInvitations');
-var sendDeleteToUninvitedParticipants = require('./helpers/sendDeleteAppointmentToSocket');
+var tellUninvitedUsersToDeleteAppointment = require('./helpers/sendDeleteAppointmentToSocket');
 var inviteAddedUsers = require('./db_handlers/dbSendInvitationTo');
-var sendNotificationTo = require('./helpers/helperSendInvitationNotification');
+var sendNotificationToAddedUsers = require('./helpers/helperSendInvitationNotification');
+
+// This handler updates an existing appointment. Sends the new version of the appointment to all relevant clients (invited or owner).
+// It will also have to tell deleted participants that they should clear their local storage of this appointment.
 
 module.exports = function(socket, io){
-    socket.on('appointment:update', function(changedApp, callback){
-
-        updateAppointment(changedApp, function(addedUsers, removedUsers){
-            var formattedAddedUsers = [];
-            if(addedUsers !== null){
-                addedUsers.forEach(function(user_id){
-                    formattedAddedUsers.push(parseInt(user_id));
-                });
-            } else {
-                formattedAddedUsers = null;
-            }
-            inviteAddedUsers(addedUsers, changedApp.appointment_id, function(){
-                uninviteRemovedUsers(removedUsers, changedApp.appointment_id, function(){
-                    getSerializedAppointment(changedApp.appointment_id, function(appointment){
-                        updateAllParticipants(socket, io, appointment, function(){
-                            sendDeleteToUninvitedParticipants(socket, io, changedApp.appointment_id, removedUsers, function(){
-                                sendNotificationTo(socket, io, changedApp.appointment_id, formattedAddedUsers, function(){
+    socket.on('appointment:update', function(editedAppointment, callback){
+        updateAppointmentWithNewData(editedAppointment, function(addedUsers, removedUsers){
+            inviteAddedUsers(addedUsers, editedAppointment.appointment_id, function(){
+                uninviteRemovedUsers(removedUsers, editedAppointment.appointment_id, function(){
+                    getTheNewSerializedAppoint(editedAppointment.appointment_id, function(editedSerializedAppointment){
+                        updateAllRelevantClients(socket, io, editedSerializedAppointment, function(){
+                            tellUninvitedUsersToDeleteAppointment(socket, io, editedAppointment.appointment_id, removedUsers, function(){
+                                sendNotificationToAddedUsers(socket, io, editedAppointment.appointment_id, addedUsers, function(){
                                     var message = { "message" : "added", "status": 200};
                                     if(typeof(callback) === typeof(Function)) callback(message);
                                 })

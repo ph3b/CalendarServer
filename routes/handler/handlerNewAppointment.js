@@ -1,10 +1,10 @@
 var jwt = require('jsonwebtoken');
 var settings = require('../../config/settings.js');
 var db = require('./../../config/db.js');
-var newAppointment = require('./db_handlers/dbNewAppointment');
-var getSerializedAppointment = require('./db_handlers/dbGetAppointmentDetails');
-var updateAllParticipants = require('./helpers/helperUpdateAllSockets');
-var sendNotificationToAllParticipants = require('./helpers/helperSendInvitationNotification');
+var createNewAppointment = require('./db_handlers/dbNewAppointment');
+var getSerializedVersionOfNewAppointment = require('./db_handlers/dbGetAppointmentDetails');
+var sendAppointmentToInvitedUsers = require('./helpers/helperUpdateAllSockets');
+var sendNotificationsToAllInvitedUsers = require('./helpers/helperSendInvitationNotification');
 var format = require('./helpers/helperParticipantList');
 
 module.exports = function(socket, io){
@@ -19,14 +19,13 @@ module.exports = function(socket, io){
             "description" : req.description,
             "participants" : req.participants
         };
-        newAppointment(appointment, function(message, addedAppointment){
-            getSerializedAppointment(addedAppointment.appointment_id, function(serializedAppointment){
-
-                updateAllParticipants(socket, io, serializedAppointment,function(){
-                    var app_id = serializedAppointment.appointment_id;
-                    var invitees = format.formatList(serializedAppointment.participants);
-                    sendNotificationToAllParticipants(socket, io, app_id, invitees, function(){
-                        if(typeof(callback) === typeof(Function)) callback(message);
+        createNewAppointment(appointment, function(responseMessage, newUnserializedAppointment){
+            getSerializedVersionOfNewAppointment(newUnserializedAppointment.appointment_id, function(newSerializedAppointment){
+                sendAppointmentToInvitedUsers(socket, io, newSerializedAppointment,function(){
+                    var app_id = newSerializedAppointment.appointment_id;
+                    var invitees = format.formatList(newSerializedAppointment.participants);
+                    sendNotificationsToAllInvitedUsers(socket, io, app_id, invitees, function(){
+                        if(typeof(callback) === typeof(Function)) callback(responseMessage);
                     })
                 })
             });

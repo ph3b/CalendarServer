@@ -9,6 +9,7 @@ var db = require('./../../config/db.js');
 module.exports = function(req, res){
     var message;
     var user = {"username": req.body.username, "password": req.body.password};
+
     db.query("select * from cal_user where username = ?", user.username, function(err, response){
         /* istanbul ignore if */
         if(err){

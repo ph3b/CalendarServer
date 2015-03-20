@@ -16,7 +16,7 @@ module.exports = function(socket){
             // Removes currently logged in user
             for(var i = 0; i<users.length;i++){
                 if(users[i].user_id === user_id){
-                    currentUser = JSON.parse(JSON.stringify(users[i]));
+                    currentUser = JSON.parse(JSON.stringify(users[i])); // Deep copy
                     users.splice(i, 1);
                     break;
                 }

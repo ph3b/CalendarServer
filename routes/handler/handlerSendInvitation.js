@@ -5,7 +5,7 @@ var db = require('./../../config/db.js');
 var jwt = require('jsonwebtoken');
 var settings = require('./../../config/settings.js');
 var sendInvitationTo = require('./db_handlers/dbSendInvitationTo');
-var getSerializedAppointment = require('./db_handlers/dbGetAppointmentDetails');
+var getUpdatedVersionOfSerializedAppointment = require('./db_handlers/dbGetAppointmentDetails');
 var updateAllParticipants = require('./helpers/helperUpdateAllSockets');
 var sendNotificationTo = require('./helpers/helperSendInvitationNotification');
 
@@ -19,7 +19,7 @@ module.exports = function(socket, io){
         var inviteUserId = invitationInfo.user_id;
         sendInvitationTo([invite.user_id], invite.appointment_id, function(){
 
-            getSerializedAppointment(invite.appointment_id, function(serializedAppointment){
+            getUpdatedVersionOfSerializedAppointment(invite.appointment_id, function(serializedAppointment){
 
                 updateAllParticipants(socket, io, serializedAppointment,function(){
 

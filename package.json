@@ -21,7 +21,6 @@
     "superagent": "^0.21.0"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha",
-    "local-test": "./node_modules/mocha/bin/mocha"
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha"
   }
 }

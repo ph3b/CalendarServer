@@ -63,7 +63,6 @@ describe('Should send notifications to added users', function(){
             erlendIo.on('connect', function(){
                 mathiasIo.emit('appointment:update', editedApp);
                 erlendIo.on('invite:new', function(invite){
-                    console.log(invite);
                     expect(invite.title).to.be.eql('Sprintmøte redigert');
                     expect(invite.date).to.be.eql('21.2.2015');
                     mathiasIo.disconnect();

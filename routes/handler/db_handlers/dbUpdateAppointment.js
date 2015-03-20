@@ -4,7 +4,7 @@
 var jwt = require('jsonwebtoken');
 var settings = require('../../../config/settings.js');
 var db = require('./../../../config/db.js');
-var getParticpantChanges = require('./formatGetParticipantChanges');
+var getParticpantChanges = require('./../format_handlers/formatGetParticipantChanges');
 
 module.exports = function(newAppointment, callback){
     var appointment = [

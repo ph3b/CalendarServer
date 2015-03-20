@@ -13,7 +13,8 @@ var deleteAppointment = require('./handler/handlerDeleteAppointment');
 var db = require('./../config/db.js');
 
 module.exports = function(io){
-
+    // This checks if client connects with a valid JWT-token signed with our secret.
+    // Only clients with valid tokens are able to create a socket connection.
     io.set('authorization', socketioJwt.authorize({
         secret: settings.secret,
         handshake: true
@@ -21,16 +22,17 @@ module.exports = function(io){
 
     io.on('connection', function(socket){
         // Socket pool handler
+        // This pool controls all connected socket. Each socket is identified by user_id
         socketPool.addSocketToPool(socket);
         socket.on('disconnect', function(){
             socketPool.removeSocket(socket);
         });
-        //Routes
-        sendInvitation(socket, io);
-        sendInitialData(socket);
-        newAppointmentRoute(socket, io);
-        updateAppointment(socket, io);
-        answerInvitation(socket, io);
-        deleteAppointment(socket, io);
+        //Socket routes
+        sendInvitation(socket, io);         // invitation:send
+        answerInvitation(socket, io);       // invitation:reply
+        sendInitialData(socket);            // appointment:initialreceive
+        newAppointmentRoute(socket, io);    // appointment:new
+        updateAppointment(socket, io);      // appointment:update
+        deleteAppointment(socket, io);      // appointment:delete
     });
 };

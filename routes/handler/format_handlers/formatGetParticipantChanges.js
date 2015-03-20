@@ -2,7 +2,7 @@
  * Created by mattiden on 17.03.15.
  */
 var db = require('./../../../config/db');
-var getSerializedAppointment = require('./dbGetAppointmentDetails');
+var getSerializedAppointment = require('./../db_handlers/dbGetAppointmentDetails');
 var participantList = require('./../helpers/helperParticipantList');
 
 module.exports = function(appointment_id, newList, callback){
